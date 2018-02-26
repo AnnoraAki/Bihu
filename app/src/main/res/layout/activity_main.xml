@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.cynthia.bihu.Activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            >
+
+    </FrameLayout>
+
+    <RadioGroup
+        android:id="@+id/radio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="horizontal"
+        >
+
+
+        <RadioButton
+            android:id="@+id/main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="主页"
+            android:textSize="15sp"
+            android:textColor="@drawable/word_select"
+            android:gravity="center"
+            android:drawableTop="@drawable/main_select"
+            android:checked="true"
+            />
+
+        <ImageView
+            android:id="@+id/choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_button"
+            />
+
+        <RadioButton
+            android:id="@+id/self"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:button="@null"
+            android:text="个人主页"
+            android:textSize="15sp"
+            android:textColor="@drawable/word_select"
+            android:gravity="center"
+            android:drawableTop="@drawable/setting_select"/>
+
+        </RadioGroup>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -6,19 +6,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cynthia.bihu.Config;
 import com.example.cynthia.bihu.Data.Answer;
 import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.BitmapUrl;
 import com.example.cynthia.bihu.Tools.CircleImageView;
+import com.example.cynthia.bihu.Tools.DateUrl;
 import com.example.cynthia.bihu.Tools.HttpUrl;
-import com.example.cynthia.bihu.Tools.MyApplication;
 import com.example.cynthia.bihu.Tools.ToastUrl;
 
 import java.util.ArrayList;
@@ -145,7 +143,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         int excitingNum = mAnswerList.get(position).getExciting();
         int naiveNum = mAnswerList.get(position).getNaive();
         holder1.content.setText(mAnswerList.get(position).getContent());
-        holder1.date.setText(mAnswerList.get(position).getDate());
+
+        String time = DateUrl.getDate(mAnswerList.get(position).getDate());
+        holder1.date.setText(time);
         holder1.authorName.setText(mAnswerList.get(position).getAuthorName());
         holder1.excitingNum.setText("("+excitingNum+")");
         holder1.naiveNum.setText("("+naiveNum+")");
@@ -184,19 +184,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         }else{
             LoadViewHolder footer = (LoadViewHolder) holder;
-            switch(load_more_status){
-                case ITEM_WAIT_FOR_LOAD:
-                    footer.progressBar.setVisibility(View.GONE);
-                    footer.toast.setText("上拉加载更多 :)");
-                    break;
-                case ITEM_LOADING:
-                    footer.progressBar.setVisibility(View.VISIBLE);
-                    footer.toast.setText("正在加载...");
-                    break;
-                case ITEM_FINISH:
-                    footer.progressBar.setVisibility(View.GONE);
-                    footer.toast.setText("没有更多了 :)");
-            }
+            footer.progressBar.setVisibility(View.GONE);
+            footer.toast.setText("没有更多了 :)");
         }
     }
 
@@ -331,8 +320,4 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-    public void changeMoreStatus(int status){
-        load_more_status=status;
-        notifyDataSetChanged();
-    }
 }

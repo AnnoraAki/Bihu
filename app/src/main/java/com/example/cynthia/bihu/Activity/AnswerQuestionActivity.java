@@ -1,11 +1,9 @@
 package com.example.cynthia.bihu.Activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.cynthia.bihu.Adapter.AnswerAdapter;
 import com.example.cynthia.bihu.Config;
@@ -25,6 +22,7 @@ import com.example.cynthia.bihu.Data.Question;
 import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.BitmapUrl;
 import com.example.cynthia.bihu.Tools.CircleImageView;
+import com.example.cynthia.bihu.Tools.DateUrl;
 import com.example.cynthia.bihu.Tools.HttpUrl;
 import com.example.cynthia.bihu.Tools.MyApplication;
 import com.example.cynthia.bihu.Tools.ToastUrl;
@@ -89,33 +87,11 @@ public class AnswerQuestionActivity extends BaseActivity {
         setUpRefresh();
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mAnswerQv.setLayoutManager(layoutManager);
+        mAnswerQv.setNestedScrollingEnabled(false);
         mRefresh.post(new Runnable() {
             @Override
             public void run() {
                 mRefresh.setRefreshing(true);
-            }
-        });
-
-        mAnswerQv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (!mRefresh.isRefreshing()){
-                    int lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-                    Log.d("VisibleItem",""+lastVisibleItem);
-                    if (lastVisibleItem % 15 == 0 && lastVisibleItem != totalCount ){
-                        answerAdapter.changeMoreStatus(1);
-                        if (answers.size() != totalCount && !mloading ){
-                            loadData();
-                            mloading = true;
-                        }
-                    }else if (lastVisibleItem == totalCount){
-                        answerAdapter.changeMoreStatus(2);
-                    }else {
-                        answerAdapter.changeMoreStatus(0);
-                    }
-
-                }
             }
         });
 
@@ -228,8 +204,15 @@ public class AnswerQuestionActivity extends BaseActivity {
         context.setText(mQuestion.getContent());
         excitingNum.setText("("+mQuestion.getExciting()+")");
         naiveNum.setText("("+mQuestion.getNaive()+")");
-        date.setText(mQuestion.getDate());
         commentNum.setText("共"+mQuestion.getAnswerCount()+"条评论");
+
+        if (mQuestion.getRecent().equals("null")) {
+            String time = DateUrl.getDate(mQuestion.getDate());
+            date.setText(time + "发布");
+        } else {
+            String time = DateUrl.getDate(mQuestion.getRecent());
+            date.setText(time + "更新");
+        }
 
         int naiveImage = mQuestion.isIs_naive()?
                 (R.drawable.ic_bad_selected):(R.drawable.ic_bad);
@@ -270,7 +253,7 @@ public class AnswerQuestionActivity extends BaseActivity {
         }
 
 
-        String param = "page=0&count=15&qid="+qId+"&token="+MyApplication.getMUser().getToken();
+        String param = "page=0&count="+mQuestion.getAnswerCount()+"&qid="+qId+"&token="+MyApplication.getMUser().getToken();
 
         HttpUrl.sendHttpRequest(Config.GET_ANSWER_LIST, param, new HttpUrl.Callback() {
             @Override
@@ -404,8 +387,9 @@ public class AnswerQuestionActivity extends BaseActivity {
         mQuestion.setExciting(intent.getIntExtra("excitingNum",0));
         mQuestion.setNaive(intent.getIntExtra("naiveNum",0));
         mQuestion.setAuthorId(intent.getIntExtra("authorId",0));
-        mQuestion.setAnswerCount(intent.getIntExtra("authorCount",0));
+        mQuestion.setAnswerCount(intent.getIntExtra("answerCount",0));
         mQuestion.setDate(intent.getStringExtra("date"));
+        mQuestion.setRecent(intent.getStringExtra("recent"));
         mQuestion.setAuthorAvatar(intent.getStringExtra("authorAvatar"));
         mQuestion.setIs_naive(intent.getBooleanExtra("naive",false));
         mQuestion.setIs_exciting(intent.getBooleanExtra("exciting",false));
@@ -503,26 +487,6 @@ public class AnswerQuestionActivity extends BaseActivity {
                 }
             });
         }
-    }
-
-    private void loadData(){
-        String param = "page="+(curPage+1)+"&count=15&token="+ MyApplication.getMUser().getToken();
-        HttpUrl.sendHttpRequest(Config.GET_ANSWER_LIST, param, new HttpUrl.Callback() {
-            @Override
-            public void onFinish(String response) {
-                jsonAnswerList(response, true);
-            }
-
-            @Override
-            public void onError(final String error) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUrl.showError(error);
-                    }
-                });
-            }
-        });
     }
 
 }

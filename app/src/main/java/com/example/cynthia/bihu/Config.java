@@ -23,5 +23,5 @@ public class Config {
     public static final String CANCEL_EXCITING = "http://bihu.jay86.com/cancelExciting.php";
     public static final String NAIVE = "http://bihu.jay86.com/naive.php";
     public static final String CANCEL_NAIVE = "http://bihu.jay86.com/cancelNaive.php";
-
+    public static final String GET_TOKEN = "http://zzzia.net/qiniu/";
 }

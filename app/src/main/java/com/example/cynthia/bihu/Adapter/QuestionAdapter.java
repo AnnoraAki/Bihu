@@ -18,6 +18,7 @@ import com.example.cynthia.bihu.Data.Question;
 import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.BitmapUrl;
 import com.example.cynthia.bihu.Tools.CircleImageView;
+import com.example.cynthia.bihu.Tools.DateUrl;
 import com.example.cynthia.bihu.Tools.HttpUrl;
 import com.example.cynthia.bihu.Tools.ToastUrl;
 
@@ -76,6 +77,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     intent.putExtra("authorAvatar",question.getAuthorAvatar());
                     intent.putExtra("answerCount",question.getAnswerCount());
                     intent.putExtra("date",question.getDate());
+                    intent.putExtra("recent",question.getRecent());
                     v.getContext().startActivity(intent);
                 }
             });
@@ -162,9 +164,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             holder1.title.setText(mQuestionList.get(position).getTitle());
             holder1.context.setText(mQuestionList.get(position).getContent());
             if (mQuestionList.get(position).getRecent().equals("null")) {
-                holder1.date.setText(mQuestionList.get(position).getDate() + "发布");
+                String time = DateUrl.getDate(mQuestionList.get(position).getDate());
+                holder1.date.setText(time + "发布");
             } else {
-                holder1.date.setText(mQuestionList.get(position).getRecent() + "更新");
+                String time = DateUrl.getDate(mQuestionList.get(position).getRecent());
+                holder1.date.setText(time + "更新");
             }
             holder1.userId.setText(mQuestionList.get(position).getAuthorName());
             holder1.answerCount.setText("共" + AnswerCount + "条评论");

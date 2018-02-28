@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.cynthia.bihu.Activity.ChangeAvatarActivity;
 import com.example.cynthia.bihu.Activity.ChangePasswordActivity;
 import com.example.cynthia.bihu.Activity.LogInActivity;
 import com.example.cynthia.bihu.Activity.MainActivity;
@@ -36,10 +37,19 @@ public class SettingFragment extends android.support.v4.app.Fragment {
 
         initData(view);
 
+        userAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChangeAvatarActivity.class);
+                startActivity(intent);
+            }
+        });
+
         changeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                改变头像的逻辑
+                Intent intent = new Intent(getActivity(), ChangeAvatarActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -56,6 +66,7 @@ public class SettingFragment extends android.support.v4.app.Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(),LogInActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
         return view;

@@ -20,7 +20,6 @@ public class DateUrl {
             long day = l/(24 * 60 * 60 * 1000);
             long hour = l/(60 * 60 * 1000) - day * 24;
             long min = l/(60 * 1000) - day * 24 * 60 - hour * 60;
-            long second = l/1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60;
             if (day > 0){
                 return "大概"+day+"天前";
             }else if (hour > 0){
@@ -28,7 +27,7 @@ public class DateUrl {
             }else if (min > 0){
                 return "大概在"+min+"分钟前";
             }else {
-                return "应该是在"+second+"秒前";
+                return "刚刚";
             }
         } catch (ParseException e) {
             e.printStackTrace();

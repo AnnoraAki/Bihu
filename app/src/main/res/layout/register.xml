@@ -49,6 +49,7 @@
             android:layout_marginTop="8dp"
             android:hint="填写用户名"
             android:padding="8dp"
+            android:inputType="textVisiblePassword"
             android:singleLine="true" />
 
         <EditText

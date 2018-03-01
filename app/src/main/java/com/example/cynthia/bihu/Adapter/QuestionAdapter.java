@@ -39,7 +39,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private final static int ITEM_LOADING = 1;
     private final static int ITEM_FINISH =2;
 
-    private int load_more_status = 0;
+    private int load_more_status = 2;
 
     public QuestionAdapter(ArrayList<Question> questions,String token){
         this.mQuestionList = questions;
@@ -222,7 +222,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                 @Override
                                 public void run() {
                                     holder1.image.setVisibility(View.GONE);
-                                    ToastUrl.showError("图片资源加载失败...");
+//                                    ToastUrl.showError("图片资源加载失败...");
                                 }
                             });
                         }

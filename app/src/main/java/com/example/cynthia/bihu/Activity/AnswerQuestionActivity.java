@@ -271,7 +271,8 @@ public class AnswerQuestionActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     image.setVisibility(View.GONE);
-                                    ToastUrl.showError("图片资源加载失败...");
+//                                    有些返回就是空的。。不是null...
+//                                    ToastUrl.showError("图片资源加载失败...");
                                 }
                             });
                         }

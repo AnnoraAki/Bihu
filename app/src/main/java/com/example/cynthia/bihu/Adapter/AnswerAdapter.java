@@ -35,12 +35,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final static int ITEM_ANSWER = 0;
     private final static int ITEM_END = 1;
 
-    private final static int ITEM_WAIT_FOR_LOAD = 0;
-    private final static int ITEM_LOADING = 1;
-    private final static int ITEM_FINISH =2;
-
-    private int load_more_status = 2;
-
     public AnswerAdapter(ArrayList<Answer> answers, String token, int qId,
                          int qAuthorId,int userId){
         this.mAnswerList = answers;
@@ -61,7 +55,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (viewType == ITEM_ANSWER){
             View itemView = layoutInflater.inflate(R.layout.answer, parent, false);
             final AnswerViewHolder holder = new AnswerViewHolder(itemView);
-            if (userId == qAuthorId ){
+            if (userId == qAuthorId){
                 holder.best.setVisibility(View.VISIBLE);
             }else {
                 holder.best.setVisibility(View.GONE);
@@ -169,11 +163,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                             @Override
                             public void run() {
                                 holder1.authorAvatar.setImageResource(R.drawable.ic_head);
-                                if (qAuthorId != mAnswerList.get(position).getAuthorId())
                                 ToastUrl.showError("头像资源加载失败...");
-                                else {
-
-                                }
                             }
                         });
                         }

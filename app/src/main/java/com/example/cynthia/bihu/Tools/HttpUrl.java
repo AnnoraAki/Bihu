@@ -1,5 +1,7 @@
 package com.example.cynthia.bihu.Tools;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,6 +54,7 @@ public class HttpUrl {
                         JSONObject object = new JSONObject(response.toString());
                         int status = object.getInt("status");
                         String info = object.getString("info");
+                        Log.d("response",""+response);
                         if (status == 200 && callback != null){
                             callback.onFinish(response.toString());
                         }else {

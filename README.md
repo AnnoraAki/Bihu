@@ -2,6 +2,8 @@
 
 重庆邮电大学 红岩网校移动开发部 Android学员 2018年 寒假作业 lv3
 
+![github](https://github.com/Cchanges/Bihu/blob/master/app/src/main/res/mipmap-xhdpi/logo.png)
+
 ## apk下载地址
 
 [传送门](https://github.com/Cchanges/Bihu/blob/master/app/release/app-release.apk)
@@ -107,3 +109,6 @@
 * 代码的完善<br/>
 了解需要的。再好好写工具类。<br/>
 不然就会在写工具类的时候卡得要死甚至几个小时就这么没了...
+
+## 开发者/完成者
+[Cynthia](https://github.com/Cchanges)

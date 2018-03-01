@@ -184,102 +184,103 @@ public class AnswerQuestionActivity extends BaseActivity {
             @Override
             public void run() {
                mRefresh.setRefreshing(true);
-               initData();
+               initData(false);
             }
         });
 
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                initData();
+                initData(true);
             }
         });
 
     }
 
-    private void initData(){
-        Intent intent = getIntent();
-        loadQuestion(intent);
-        qId = intent.getIntExtra("qId",-1);
-        title.setText(mQuestion.getTitle());
-        authorName.setText(mQuestion.getAuthorName());
-        context.setText(mQuestion.getContent());
-        excitingNum.setText("("+mQuestion.getExciting()+")");
-        naiveNum.setText("("+mQuestion.getNaive()+")");
-        commentNum.setText("共"+mQuestion.getAnswerCount()+"条评论");
+    private void initData(Boolean reload){
+        if (!reload) {
+            Intent intent = getIntent();
+            loadQuestion(intent);
+            qId = intent.getIntExtra("qId", -1);
+            title.setText(mQuestion.getTitle());
+            authorName.setText(mQuestion.getAuthorName());
+            context.setText(mQuestion.getContent());
+            excitingNum.setText("(" + mQuestion.getExciting() + ")");
+            naiveNum.setText("(" + mQuestion.getNaive() + ")");
+            commentNum.setText("共" + mQuestion.getAnswerCount() + "条评论");
 
-        if (mQuestion.getRecent().equals("null")) {
-            String time = DateUrl.getDate(mQuestion.getDate());
-            date.setText(time + "发布");
-        } else {
-            String time = DateUrl.getDate(mQuestion.getRecent());
-            date.setText(time + "更新");
-        }
+            if (mQuestion.getRecent().equals("null")) {
+                String time = DateUrl.getDate(mQuestion.getDate());
+                date.setText(time + "发布");
+            } else {
+                String time = DateUrl.getDate(mQuestion.getRecent());
+                date.setText(time + "更新");
+            }
 
-        int naiveImage = mQuestion.isIs_naive()?
-                (R.drawable.ic_bad_selected):(R.drawable.ic_bad);
-        int excitingImage = mQuestion.isIs_exciting()?
-                (R.drawable.ic_good_selected):(R.drawable.ic_good);
-        int favoriteImage = mQuestion.isIs_favorite()?
-                (R.drawable.ic_favorite1_selected):(R.drawable.ic_favorite1);
+            int naiveImage = mQuestion.isIs_naive() ?
+                    (R.drawable.ic_bad_selected) : (R.drawable.ic_bad);
+            int excitingImage = mQuestion.isIs_exciting() ?
+                    (R.drawable.ic_good_selected) : (R.drawable.ic_good);
+            int favoriteImage = mQuestion.isIs_favorite() ?
+                    (R.drawable.ic_favorite1_selected) : (R.drawable.ic_favorite1);
 
-        naive.setImageResource(naiveImage);
-        exciting.setImageResource(excitingImage);
-        favorite.setImageResource(favoriteImage);
+            naive.setImageResource(naiveImage);
+            exciting.setImageResource(excitingImage);
+            favorite.setImageResource(favoriteImage);
 
-        if (!mQuestion.getAuthorAvatar().equals("null")){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final Bitmap bitmap = BitmapUrl.getBitmap(mQuestion.getAuthorAvatar());
-                    if (bitmap != null){
-                        authorAvatar.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                authorAvatar.setImageBitmap(bitmap);
-                            }
-                        });
-                    }else{
-                        authorAvatar.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                authorAvatar.setImageResource(R.drawable.ic_head);
-                                ToastUrl.showError("头像资源加载失败...");
-                            }
-                        });
+            if (!mQuestion.getAuthorAvatar().equals("null")) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Bitmap bitmap = BitmapUrl.getBitmap(mQuestion.getAuthorAvatar());
+                        if (bitmap != null) {
+                            authorAvatar.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    authorAvatar.setImageBitmap(bitmap);
+                                }
+                            });
+                        } else {
+                            authorAvatar.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    authorAvatar.setImageResource(R.drawable.ic_head);
+                                    ToastUrl.showError("头像资源加载失败...");
+                                }
+                            });
+                        }
                     }
-                }
-            }).start();
-        }else{
-            authorAvatar.setImageResource(R.drawable.ic_head);
-        }
-        if (!mQuestion.getImages().equals("null")){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final Bitmap bitmap = BitmapUrl.getBitmap(mQuestion.getImages());
-                    if (bitmap != null){
-                        image.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                image.setImageBitmap(bitmap);
-                            }
-                        });
-                    }else{
-                        image.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                image.setVisibility(View.GONE);
-                                ToastUrl.showError("图片资源加载失败...");
-                            }
-                        });
+                }).start();
+            } else {
+                authorAvatar.setImageResource(R.drawable.ic_head);
+            }
+            if (!mQuestion.getImages().equals("null")) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Bitmap bitmap = BitmapUrl.getBitmap(mQuestion.getImages());
+                        if (bitmap != null) {
+                            image.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    image.setImageBitmap(bitmap);
+                                }
+                            });
+                        } else {
+                            image.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    image.setVisibility(View.GONE);
+                                    ToastUrl.showError("图片资源加载失败...");
+                                }
+                            });
+                        }
                     }
-                }
-            }).start();
-        }else{
-            image.setVisibility(View.GONE);
+                }).start();
+            } else {
+                image.setVisibility(View.GONE);
+            }
         }
-
 
         String param = "page=0&count="+mQuestion.getAnswerCount()+"&qid="+qId+"&token="+MyApplication.getMUser().getToken();
 
@@ -323,7 +324,7 @@ public class AnswerQuestionActivity extends BaseActivity {
                         mRefresh.post(new Runnable() {
                             @Override
                             public void run() {
-                                initData();
+                                initData(true);
                             }
                         });
                     }

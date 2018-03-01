@@ -11,7 +11,7 @@ public class Question {
     private int id;
     private String title;
     private String content;
-    private List<String> images;
+    private String images;
     private String date;
     private int exciting;
     private int naive;
@@ -32,7 +32,7 @@ public class Question {
         this.id = id;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(String images) {
         this.images = images;
     }
 
@@ -84,7 +84,7 @@ public class Question {
         return date;
     }
 
-    public List<String> getImages() {
+    public String getImages() {
         return images;
     }
 

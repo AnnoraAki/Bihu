@@ -68,6 +68,14 @@
             android:gravity="top"
             android:background="@null"/>
 
+        <ImageView
+            android:id="@+id/send_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="right"
+            android:layout_marginBottom="5dp"
+            />
+
         <Button
             android:id="@+id/publish"
             android:layout_width="match_parent"

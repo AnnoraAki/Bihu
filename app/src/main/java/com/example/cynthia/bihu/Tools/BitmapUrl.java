@@ -36,6 +36,7 @@ public class BitmapUrl {
     private static String upKey;
     private static Boolean succeed = false;
 
+
     public static Bitmap getBitmap(final String url) {
         URL mUrl = null;
         Bitmap bitmap = null;
@@ -90,14 +91,13 @@ public class BitmapUrl {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1 * 1000);
+                    Thread.sleep(2 * 1000);
 //                  延迟运行这边的使得另一个方法能够顺利执行完。
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 if (succeed) {
                     if (imagePath != null) {
-
                         uploadManager.put(imagePath, upKey, updateToken, new UpCompletionHandler() {
                             @Override
                             public void complete(String key, ResponseInfo info, JSONObject response) {
@@ -122,7 +122,6 @@ public class BitmapUrl {
         }
     }).start();
 }
-
 
 
     private static void changeAvatar(final Activity activity){

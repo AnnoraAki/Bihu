@@ -18,6 +18,7 @@ import com.example.cynthia.bihu.Data.Question;
 import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.HttpUrl;
 import com.example.cynthia.bihu.Tools.MyApplication;
+import com.example.cynthia.bihu.Tools.ToastUrl;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,6 +91,7 @@ public class YourFavoriteActivity extends BaseActivity {
                     question.setAuthorId(jsonObject2.getInt("authorId"));
                     question.setAuthorName(jsonObject2.getString("authorName"));
                     question.setAuthorAvatar(jsonObject2.getString("authorAvatar"));
+                    question.setImages(jsonObject2.getString("image"));
                     question.setIs_exciting(jsonObject2.getBoolean("is_exciting"));
                     question.setIs_naive(jsonObject2.getBoolean("is_naive"));
                     question.setIs_favorite(true);
@@ -111,8 +113,7 @@ public class YourFavoriteActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(YourFavoriteActivity.this,info,
-                        Toast.LENGTH_SHORT).show();
+                ToastUrl.showResponse(info);
             }
         });
     }

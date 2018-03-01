@@ -78,8 +78,8 @@
 
                             <com.example.cynthia.bihu.Tools.CircleImageView
                                 android:id="@+id/more_user_image"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginBottom="5dp"
@@ -95,16 +95,25 @@
                                 android:layout_gravity="center_vertical"/>
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/more_context"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="5dp"
-                            android:layout_marginRight="5dp"
-                            android:textSize="18sp"
-                            android:textColor="#999"
-                            />
+                            <TextView
+                                android:id="@+id/more_context"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginRight="5dp"
+                                android:textSize="18sp"
+                                android:textColor="#999"
+                                />
+
+                            <ImageView
+                                android:id="@+id/more_context_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="10dp"/>
+
 
                         <TextView
                             android:id="@+id/more_date"

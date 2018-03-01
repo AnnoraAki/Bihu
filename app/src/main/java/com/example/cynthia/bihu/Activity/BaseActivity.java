@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.cynthia.bihu.Tools.ActivityCollector;
 import com.example.cynthia.bihu.Tools.MyApplication;
@@ -119,12 +120,19 @@ public class BaseActivity extends AppCompatActivity {
         Uri uri = data.getData();
         if (DocumentsContract.isDocumentUri(this,uri)){
 //          document类型的uri通过document id对于uri处理
+            Log.d("uri",""+uri);
             String docId = DocumentsContract.getDocumentId(uri);
+
             if ("com.android.providers.media.documents".equals(uri.getAuthority())){
                 String id = docId.split(":")[1];//解析id
                 String selection = MediaStore.Images.Media._ID + "=" + id;
                 imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,selection);
             } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())){
+                Log.d("头像路径",docId);
+//              docId = docId.replaceAll("[^a-z^A-Z^0-9^.^/^:]", "");
+//              在该分支中若选择的图片名是电脑上面传过去的还是二次处理过的图片，会报错...
+//              我也不是很懂为啥...orz
+//              Log.d("处理后头像路径",docId);
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content:" +
                         "//downloads/public_downloads"),Long.valueOf(docId)
                 );

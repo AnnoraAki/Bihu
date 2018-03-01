@@ -78,6 +78,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     intent.putExtra("answerCount",question.getAnswerCount());
                     intent.putExtra("date",question.getDate());
                     intent.putExtra("recent",question.getRecent());
+                    intent.putExtra("image", question.getImages());
                     v.getContext().startActivity(intent);
                 }
             });
@@ -204,6 +205,33 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else{
                 holder1.userAvatar.setImageResource(R.drawable.ic_head);
             }
+            if (!mQuestionList.get(position).getImages().equals("null")){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Bitmap bitmap = BitmapUrl.getBitmap(mQuestionList.get(position).getImages());
+                        if(bitmap != null){
+                            holder1.image.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder1.image.setImageBitmap(bitmap);
+                                }
+                            });
+                        }else {
+                            holder1.image.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    holder1.image.setVisibility(View.GONE);
+                                    ToastUrl.showError("图片资源加载失败...");
+                                }
+                            });
+                        }
+
+                    }
+                }).start();
+            }else {
+                holder1.image.setVisibility(View.GONE);
+            }
         }else{
             LoadViewHolder footer = (LoadViewHolder) holder;
             switch(load_more_status){
@@ -241,6 +269,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         ImageView exciting;
         ImageView naive;
         ImageView favorite;
+        ImageView image;
 
         QuestionViewHolder(View itemView) {
             super(itemView);
@@ -256,6 +285,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             favorite = itemView.findViewById(R.id.question_favorite);
             date = itemView.findViewById(R.id.question_date);
             answerCount = itemView.findViewById(R.id.question_answer_num);
+            image = itemView.findViewById(R.id.question_context_image);
         }
     }
 

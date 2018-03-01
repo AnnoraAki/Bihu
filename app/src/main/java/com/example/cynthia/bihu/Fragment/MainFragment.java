@@ -141,6 +141,7 @@ public class MainFragment extends Fragment {
                 question.setAuthorId(jsonObject2.getInt("authorId"));
                 question.setAuthorName(jsonObject2.getString("authorName"));
                 question.setAuthorAvatar(jsonObject2.getString("authorAvatar"));
+                question.setImages(jsonObject2.getString("images"));
                 question.setIs_exciting(jsonObject2.getBoolean("is_exciting"));
                 question.setIs_naive(jsonObject2.getBoolean("is_naive"));
                 question.setIs_favorite(jsonObject2.getBoolean("is_favorite"));

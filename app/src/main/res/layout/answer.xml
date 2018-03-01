@@ -9,8 +9,8 @@
 
     <com.example.cynthia.bihu.Tools.CircleImageView
         android:id="@+id/answer_avatar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="10dp"
 
         android:scaleType="centerInside"/>
@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="8dp"
         android:orientation="vertical">
 
         <TextView

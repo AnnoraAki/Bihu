@@ -42,6 +42,7 @@ public class AnswerQuestionActivity extends BaseActivity {
     private ImageView naive;
     private ImageView exciting;
     private ImageView favorite;
+    private ImageView image;
     private CircleImageView authorAvatar;
     private TextView naiveNum;
     private TextView excitingNum;
@@ -79,6 +80,7 @@ public class AnswerQuestionActivity extends BaseActivity {
         excitingNum = findViewById(R.id.more_record_exciting);
         favorite = findViewById(R.id.more_favorite);
         date = findViewById(R.id.more_date);
+        image = findViewById(R.id.more_context_image);
         commentNum = findViewById(R.id.more_comment_num);
         mAnswerQv = findViewById(R.id.answer_recycler);
         mRefresh = findViewById(R.id.refresh_answer);
@@ -251,6 +253,32 @@ public class AnswerQuestionActivity extends BaseActivity {
         }else{
             authorAvatar.setImageResource(R.drawable.ic_head);
         }
+        if (!mQuestion.getImages().equals("null")){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Bitmap bitmap = BitmapUrl.getBitmap(mQuestion.getImages());
+                    if (bitmap != null){
+                        image.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                image.setImageBitmap(bitmap);
+                            }
+                        });
+                    }else{
+                        image.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                image.setVisibility(View.GONE);
+                                ToastUrl.showError("图片资源加载失败...");
+                            }
+                        });
+                    }
+                }
+            }).start();
+        }else{
+            image.setVisibility(View.GONE);
+        }
 
 
         String param = "page=0&count="+mQuestion.getAnswerCount()+"&qid="+qId+"&token="+MyApplication.getMUser().getToken();
@@ -391,6 +419,7 @@ public class AnswerQuestionActivity extends BaseActivity {
         mQuestion.setDate(intent.getStringExtra("date"));
         mQuestion.setRecent(intent.getStringExtra("recent"));
         mQuestion.setAuthorAvatar(intent.getStringExtra("authorAvatar"));
+        mQuestion.setImages(intent.getStringExtra("image"));
         mQuestion.setIs_naive(intent.getBooleanExtra("naive",false));
         mQuestion.setIs_exciting(intent.getBooleanExtra("exciting",false));
         mQuestion.setIs_favorite(intent.getBooleanExtra("favorite",false));

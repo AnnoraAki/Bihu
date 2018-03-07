@@ -1,8 +1,12 @@
 # 逼乎
 
-重庆邮电大学 红岩网校移动开发部 Android学员 2018年 寒假作业
+重庆邮电大学 红岩网校移动开发部 Android学员 2018年 寒假作业 lv3
+
+![github](https://github.com/Cchanges/Bihu/blob/master/app/src/main/res/mipmap-xhdpi/logo.png)
 
 ## apk下载地址
+
+[传送门](https://github.com/Cchanges/Bihu/blob/master/app/release/app-release.apk)
 
 ## 实现的功能
 
@@ -13,31 +17,31 @@
 ## 功能展示
 * 用户注册\登陆
 
-
+![github](https://github.com/Cchanges/Bihu/blob/master/gif/Animation1.gif)
 
 * 发表问题（含图片）
 
-
+![github](https://github.com/Cchanges/Bihu/blob/master/gif/Animation2.gif)
 
 * 问题的点赞\点踩\收藏
 
-
+![github](https://github.com/Cchanges/Bihu/blob/master/gif/Animation3.gif)
 
 * 发表评论
 
-
+![github](https://github.com/Cchanges/Bihu/blob/master/gif/Animation4.gif)
 
 * 评论的点赞\点踩\采纳
 
-
+![github](https://github.com/Cchanges/Bihu/blob/master/gif/Animation5.gif)
 
 * 查看收藏列表并在收藏列表内操作
 
-
+![github](https://github.com/Cchanges/Bihu/blob/master/gif/Animation6.gif)
 
 * 更换头像
 
-
+![github](https://github.com/Cchanges/Bihu/blob/master/gif/Animation7.gif)
 
 >关于这个遇到一个问题，在模拟器端如果选择的图片是从电脑传过来的<br/>
 或者是在模拟器上二次加工的图片再进行处理的时候会报错<br/>
@@ -45,15 +49,17 @@
 处理封装后的uri时候返回的并不是数字id而是路径...<br/>
 >不知道这个是不是因为自己的代码判断问题还是什么...
 
-## 习得了
-* 界面绘制
+## 通过这个“大”工程习得了
+* 界面绘制/控件使用
   * `LinerLayout`
   * `ConstrainLayout`
   * 嵌套布局
   * 自定义`shape`
   * `svg`导入和加工
   * `anim`
-  
+  * `SwipeRefreshLayout`
+  * `popupwindow`
+  
 * `HttpUrlConnection`
 
 * 原生JSON解析
@@ -94,19 +100,18 @@
 数据库保存网络获取的相关数据（问题列表/回答列表/头像）
 
 ## 可能有时间会完善的点
-* 问答列表加载<br/>
-回答问题列表的加载在发布了新回答之后无法加载出新的回答，需要回到主页面后再进入回答页面进行数据刷新
 
 * 动画<br/>
 `popupwindow`弹出时展现的动画，加载动画，进入app动画
 
 * 回答的时候添加图片(虽然在实际方面感觉没什么意义)
 
-* 日期处理类的完善<br/>
-在实测（模拟机测试）的时候发现根据日期处理后服务器的打印时间跟虚拟机上面的运行时间相差15秒<br/>
-导致在发布问题的时候日期显示为负数<br/>
-可能处理为如果简陋版时间戳无法处理的时间直接转换为具体的年月日时分
+* bug的修复<br/>
+录制gif的时候才知道又有这么多bug了...改掉了一些不知道还会不会有..路漫漫
 
 * 代码的完善<br/>
 了解需要的。再好好写工具类。<br/>
 不然就会在写工具类的时候卡得要死甚至几个小时就这么没了...
+
+## 开发者/完成者
+[Cynthia](https://github.com/Cchanges)

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     tools:context="com.example.cynthia.bihu.Activity.AnswerQuestionActivity">
 
     <android.support.v7.widget.Toolbar

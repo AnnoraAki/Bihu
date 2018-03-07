@@ -86,7 +86,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
-                    clickNaive(position);
+                    clickNaive(position,holder);
                     if(mQuestionList.get(position).isIs_naive()){
                         holder.naive.setImageResource(R.drawable.ic_bad);
                         holder.naiveNum.setText("("+(mQuestionList.get(position).
@@ -108,7 +108,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
-                    clickExciting(position);
+                    clickExciting(position,holder);
                     if(mQuestionList.get(position).isIs_exciting()){
                         holder.exciting.setImageResource(R.drawable.ic_good);
                         holder.excitingNum.setText("("+(mQuestionList.get(position).
@@ -130,7 +130,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
-                    clickFavorite(position);
+                    clickFavorite(position,holder);
                     if(mQuestionList.get(position).isIs_favorite()){
                         holder.favorite.setImageResource(R.drawable.ic_favorite1);
                         mQuestionList.get(position).setIs_favorite(false);
@@ -222,7 +222,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                                 @Override
                                 public void run() {
                                     holder1.image.setVisibility(View.GONE);
-//                                    ToastUrl.showError("图片资源加载失败...");
+                                    ToastUrl.showError("图片资源加载失败...");
                                 }
                             });
                         }
@@ -301,7 +301,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    private void clickNaive(int position){
+    private void clickNaive(final int position, final QuestionViewHolder holder){
         String param = "id="+mQuestionList.get(position).getId()+
                 "&type=1&token="+userToken;
         if(mQuestionList.get(position).isIs_naive()){
@@ -309,13 +309,23 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onFinish(String response) {
                     Log.d("取消讨厌","succeed");
-
                 }
 
                 @Override
                 public void onError(String error) {
                     Log.d("取消讨厌",error);
-
+                    holder.naive.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUrl.showError("取消失败");
+                            holder.naive.setImageResource(R.drawable.ic_bad_selected);
+                            holder.naiveNum.setText("("+(mQuestionList.get(position).
+                                    getNaive()+1)+")");
+                            mQuestionList.get(position).setIs_naive(true);
+                            mQuestionList.get(position).setNaive(mQuestionList.get(position).
+                                    getNaive()+1);
+                        }
+                    });
                 }
             });
         }else{
@@ -328,12 +338,18 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onError(String error) {
                     Log.d("讨厌",error);
+                    holder.naive.setImageResource(R.drawable.ic_bad);
+                    holder.naiveNum.setText("("+(mQuestionList.get(position).
+                            getNaive()-1)+")");
+                    mQuestionList.get(position).setIs_naive(false);
+                    mQuestionList.get(position).setNaive(mQuestionList.get(position).
+                            getNaive()-1);
                 }
             });
         }
     }
 
-    private void clickExciting(int position){
+    private void clickExciting(final int position, final QuestionViewHolder holder){
         String param = "id="+mQuestionList.get(position).getId()+
                 "&type=1&token="+userToken;
         if(mQuestionList.get(position).isIs_exciting()){
@@ -346,6 +362,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onError(String error) {
                     Log.d("取消喜欢",error);
+                    holder.exciting.setImageResource(R.drawable.ic_good_selected);
+                    holder.excitingNum.setText("("+(mQuestionList.get(position).
+                            getNaive()+1)+")");
+                    mQuestionList.get(position).setIs_exciting(true);
+                    mQuestionList.get(position).setExciting(mQuestionList.get(position).
+                            getNaive()+1);
                 }
             });
         }else{
@@ -358,12 +380,18 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onError(String error) {
                     Log.d("喜欢",error);
+                    holder.exciting.setImageResource(R.drawable.ic_good);
+                    holder.excitingNum.setText("("+(mQuestionList.get(position).
+                            getNaive()-1)+")");
+                    mQuestionList.get(position).setIs_exciting(false);
+                    mQuestionList.get(position).setExciting(mQuestionList.get(position).
+                            getNaive()-1);
                 }
             });
         }
     }
 
-    private void clickFavorite(int position){
+    private void clickFavorite(final int position, final QuestionViewHolder holder){
         String param = "qid="+mQuestionList.get(position).getId()+
                 "&token="+userToken;
         if(mQuestionList.get(position).isIs_favorite()){
@@ -376,6 +404,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onError(String error) {
                     Log.d("取消收藏",error);
+                    holder.exciting.setImageResource(R.drawable.ic_favorite1_selected);
+                    mQuestionList.get(position).setIs_favorite(true);
                 }
             });
 
@@ -389,6 +419,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 @Override
                 public void onError(String error) {
                     Log.d("收藏",error);
+                    holder.exciting.setImageResource(R.drawable.ic_favorite1);
+                    mQuestionList.get(position).setIs_favorite(false);
                 }
             });
         }

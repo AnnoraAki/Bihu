@@ -2,6 +2,7 @@ package com.example.cynthia.bihu.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ public class LogInActivity extends BaseActivity {
     EditText psw;
     Button logIn;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +54,7 @@ public class LogInActivity extends BaseActivity {
         psw = findViewById(R.id.pw);
         TextView register = findViewById(R.id.register_new);
 
-
+        loadData();
 
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,8 +67,8 @@ public class LogInActivity extends BaseActivity {
             HttpUrl.sendHttpRequest(Config.LOGIN, param, new HttpUrl.Callback() {
                 @Override
                 public void onFinish(String response) {
-                    jsonOfLogIn(response);
                     MyApplication.setPassword(userPw);
+                    jsonOfLogIn(response,false);
                 }
 
                 @Override
@@ -88,6 +91,37 @@ public class LogInActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void loadData(){
+        SharedPreferences sp = getSharedPreferences("user",Context.MODE_PRIVATE);
+        String name = sp.getString("userName",null);
+        final String password = sp.getString("userPassword",null);
+        Log.d("读取数据","name="+name+" pw="+password);
+        if (name != null && password != null){
+            String param = "username="+name+"&password="+password;
+            Log.d("param",param);
+//          添加动画显示登陆中
+            HttpUrl.sendHttpRequest(Config.LOGIN, param, new HttpUrl.Callback() {
+                @Override
+                public void onFinish(String response) {
+                    MyApplication.setPassword(password);
+                    jsonOfLogIn(response,true);
+                }
+
+                @Override
+                public void onError(final String error) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ToastUrl.showError(error);
+                        }
+                    });
+                }
+            });
+        }else{
+
+        }
     }
 
     private void showPopupWindow(){
@@ -167,7 +201,7 @@ public class LogInActivity extends BaseActivity {
                 public void run() {
                     mPopWindow.dismiss();
                     ToastUrl.showResponse("注册成功！将为您自动登录...");
-                    start();
+                    start(false);
                 }
             });
         } catch (JSONException e) {
@@ -175,7 +209,7 @@ public class LogInActivity extends BaseActivity {
         }
     }
 
-    private void jsonOfLogIn(String data) {
+    private void jsonOfLogIn(String data,Boolean reload) {
         try {
             JSONObject jsonObject = new JSONObject(data);
             runOnUiThread(new Runnable() {
@@ -189,13 +223,21 @@ public class LogInActivity extends BaseActivity {
             MyApplication.setUserAvatar(jsonObject1.getString("avatar"));
             MyApplication.setUserName(jsonObject1.getString("username"));
             MyApplication.setUserToken(jsonObject1.getString("token"));
-            start();
+            start(reload);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    private void start(){
+    private void start(Boolean reload){
+        if (!reload){
+            SharedPreferences sharedPreferences = getSharedPreferences("user",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("userName",MyApplication.getMUser().getUsername());
+            editor.putString("userPassword",MyApplication.getPassword());
+            editor.commit();
+            Log.d("存储数据","succeed");
+        }
         Intent intent = new Intent(LogInActivity.this,MainActivity.class);
         startActivity(intent);
         finish();

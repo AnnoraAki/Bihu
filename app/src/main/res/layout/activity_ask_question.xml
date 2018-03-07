@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="com.example.cynthia.bihu.Activity.AskQuestionActivity">
 
     <android.support.v7.widget.Toolbar

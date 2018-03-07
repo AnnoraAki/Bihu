@@ -1,7 +1,9 @@
 package com.example.cynthia.bihu.Fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +33,13 @@ public class SettingFragment extends android.support.v4.app.Fragment {
     TextView exit;
     TextView userId;
     CircleImageView userAvatar;
+    SharedPreferences sharedPreferences;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        sharedPreferences = context.getSharedPreferences("user", Context.MODE_PRIVATE);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.setting_fragment, container, false);
@@ -64,6 +73,9 @@ public class SettingFragment extends android.support.v4.app.Fragment {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
                 Intent intent = new Intent(getActivity(),LogInActivity.class);
                 startActivity(intent);
                 getActivity().finish();

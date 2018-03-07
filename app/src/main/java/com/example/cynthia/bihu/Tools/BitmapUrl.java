@@ -125,7 +125,7 @@ public class BitmapUrl {
 
 
     private static void changeAvatar(final Activity activity){
-        final String update = "http://"+filename+"/"+upKey+"?imageView2/2/w/200/h/200/q/75|imageslim";
+        final String update = "http://"+filename+"/"+upKey+"?imageView2/0/format/jpg/q/90|imageslim";
         String param = "token="+MyApplication.getMUser().getToken()+"&avatar="+update;
         HttpUrl.sendHttpRequest(Config.MODIFY_AVATAR, param, new HttpUrl.Callback() {
             @Override

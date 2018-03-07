@@ -119,7 +119,7 @@ public class AnswerQuestionActivity extends BaseActivity {
 
                     @Override
                     public void onError(String error) {
-
+                        ToastUrl.showError("不明情况的失败...");
                     }
                 });
 

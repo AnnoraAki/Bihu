@@ -25,6 +25,7 @@ import com.example.cynthia.bihu.Tools.CircleImageView;
 import com.example.cynthia.bihu.Tools.DateUrl;
 import com.example.cynthia.bihu.Tools.HttpUrl;
 import com.example.cynthia.bihu.Tools.MyApplication;
+import com.example.cynthia.bihu.Tools.StatusBarUrl;
 import com.example.cynthia.bihu.Tools.ToastUrl;
 
 import org.json.JSONArray;
@@ -35,7 +36,6 @@ import java.util.ArrayList;
 
 public class AnswerQuestionActivity extends BaseActivity {
 
-    private ImageView back;
     private TextView title;
     private TextView authorName;
     private TextView context;
@@ -49,31 +49,27 @@ public class AnswerQuestionActivity extends BaseActivity {
     private TextView date;
     private TextView commentNum;
     private EditText comment;
-    private Button send;
     private int qId;
-    private int totalCount;
-    private int totalPage;
-    private int curPage;
     private RecyclerView mAnswerQv;
     private SwipeRefreshLayout mRefresh;
     private Question mQuestion = new Question();
     private ArrayList<Answer> answers = new ArrayList<>();
     private AnswerAdapter answerAdapter;
 
-    private boolean mloading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUrl.setColor(this);
         setContentView(R.layout.activity_answer_question);
 
-        back = findViewById(R.id.back_more);
+        ImageView back = findViewById(R.id.back_more);
         title = findViewById(R.id.more_title);
         authorName = findViewById(R.id.more_user_id);
         authorAvatar = findViewById(R.id.more_user_image);
         context = findViewById(R.id.more_context);
         comment = findViewById(R.id.text_comment);
-        send = findViewById(R.id.send_comment);
+        Button send = findViewById(R.id.send_comment);
         naive = findViewById(R.id.more_naive);
         exciting = findViewById(R.id.more_exciting);
         naiveNum = findViewById(R.id.more_record_naive);
@@ -228,7 +224,8 @@ public class AnswerQuestionActivity extends BaseActivity {
             exciting.setImageResource(excitingImage);
             favorite.setImageResource(favoriteImage);
 
-            if (!mQuestion.getAuthorAvatar().equals("null")) {
+            Boolean flag1 = mQuestion.getAuthorAvatar().equals("null") || mQuestion.getAuthorAvatar().equals("");
+            if (!flag1) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -254,7 +251,8 @@ public class AnswerQuestionActivity extends BaseActivity {
             } else {
                 authorAvatar.setImageResource(R.drawable.ic_head);
             }
-            if (!mQuestion.getImages().equals("null")) {
+            Boolean flag2 = mQuestion.getImages().equals("null") || mQuestion.getImages().equals("");
+            if (!flag2) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -272,7 +270,7 @@ public class AnswerQuestionActivity extends BaseActivity {
                                 public void run() {
                                     image.setVisibility(View.GONE);
 //                                    有些返回就是空的。。不是null...
-//                                    ToastUrl.showError("图片资源加载失败...");
+                                    ToastUrl.showError("图片资源加载失败...");
                                 }
                             });
                         }
@@ -307,13 +305,8 @@ public class AnswerQuestionActivity extends BaseActivity {
     private void jsonResponse(String data){
         Log.d("Answer","网络申请完成");
         Log.d("Answer",data);
-        try {
-            JSONObject object = new JSONObject(data);
-            int status = object.getInt("status");
-            final String info = object.getString("info");
-            if (status == 200){
-                Log.d("Answer","succeed");
-                runOnUiThread(new Runnable() {
+        Log.d("Answer","succeed");
+        runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         ToastUrl.showResponse("回答发布成功！");
@@ -330,18 +323,6 @@ public class AnswerQuestionActivity extends BaseActivity {
                         });
                     }
                 });
-
-            }else{
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastUrl.showError(info);
-                    }
-                });
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     private void jsonAnswerList(String data,Boolean reload){
@@ -349,9 +330,9 @@ public class AnswerQuestionActivity extends BaseActivity {
             Log.d("ARv","成功传达数据");
             JSONObject jsonObject = new JSONObject(data);
             JSONObject jsonObject1 = jsonObject.getJSONObject("data");
-            totalPage = jsonObject1.getInt("totalPage");
-            totalCount = jsonObject1.getInt("totalCount");
-            Log.d("AnswerList","totalPage="+totalPage);
+            int totalPage = jsonObject1.getInt("totalPage");
+            int totalCount = jsonObject1.getInt("totalCount");
+            Log.d("AnswerList","totalPage="+ totalPage);
             JSONArray jsonArray = jsonObject1.getJSONArray("answers");
             ArrayList<Answer> answerList = new ArrayList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -370,8 +351,8 @@ public class AnswerQuestionActivity extends BaseActivity {
                 answer.setBest(jsonObject2.getInt("best"));
                 answerList.add(answer);
             }
-            curPage = jsonObject1.getInt("curPage");
-                Log.d("ARv","处理完毕，view加载中...当前为第"+curPage+"页");
+            int curPage = jsonObject1.getInt("curPage");
+                Log.d("ARv","处理完毕，view加载中...当前为第"+ curPage +"页");
                 mQuestion.setAnswerCount(totalCount);
                 if (!reload){
                     answers.clear();
@@ -379,7 +360,6 @@ public class AnswerQuestionActivity extends BaseActivity {
                     initView();
                 }else {
                     answers.addAll(answerList);
-                    mloading = false;
                 }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -404,7 +384,6 @@ public class AnswerQuestionActivity extends BaseActivity {
                         MyApplication.getMUser().getId());
                 mAnswerQv.setAdapter(answerAdapter);
 
-                mloading = false;
             }
         });
 

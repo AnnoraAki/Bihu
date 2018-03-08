@@ -22,6 +22,7 @@ import com.example.cynthia.bihu.Config;
 import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.HttpUrl;
 import com.example.cynthia.bihu.Tools.MyApplication;
+import com.example.cynthia.bihu.Tools.StatusBarUrl;
 import com.example.cynthia.bihu.Tools.ToastUrl;
 
 
@@ -42,12 +43,7 @@ public class LogInActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//      设置透明状态栏
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+        StatusBarUrl.setTransparent(this);
         setContentView(R.layout.activity_log_in);
         logIn = findViewById(R.id.logIn);
         name = findViewById(R.id.name);

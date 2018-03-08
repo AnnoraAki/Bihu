@@ -18,6 +18,7 @@ import com.example.cynthia.bihu.Data.Question;
 import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.HttpUrl;
 import com.example.cynthia.bihu.Tools.MyApplication;
+import com.example.cynthia.bihu.Tools.StatusBarUrl;
 import com.example.cynthia.bihu.Tools.ToastUrl;
 
 import org.json.JSONArray;
@@ -39,6 +40,7 @@ public class YourFavoriteActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUrl.setColor(this);
         setContentView(R.layout.activity_your_favorite);
 
         favoriteRv = findViewById(R.id.favorite_recycler);

@@ -14,6 +14,7 @@ import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.ActivityCollector;
 import com.example.cynthia.bihu.Tools.HttpUrl;
 import com.example.cynthia.bihu.Tools.MyApplication;
+import com.example.cynthia.bihu.Tools.StatusBarUrl;
 import com.example.cynthia.bihu.Tools.ToastUrl;
 
 import org.json.JSONException;
@@ -30,6 +31,7 @@ public class ChangePasswordActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUrl.setColor(this);
         setContentView(R.layout.activity_change_password);
 
         back = findViewById(R.id.back_change_pw);

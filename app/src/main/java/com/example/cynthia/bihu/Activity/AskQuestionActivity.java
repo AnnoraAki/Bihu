@@ -21,6 +21,7 @@ import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.BitmapUrl;
 import com.example.cynthia.bihu.Tools.HttpUrl;
 import com.example.cynthia.bihu.Tools.MyApplication;
+import com.example.cynthia.bihu.Tools.StatusBarUrl;
 import com.example.cynthia.bihu.Tools.ToastUrl;
 import com.qiniu.android.common.FixedZone;
 import com.qiniu.android.http.ResponseInfo;
@@ -54,6 +55,7 @@ public class AskQuestionActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUrl.setColor(this);
         setContentView(R.layout.activity_ask_question);
 
         ImageView backToPrevious = findViewById(R.id.back_ask);

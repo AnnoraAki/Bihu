@@ -146,7 +146,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         holder1.naive.setImageResource(naiveImage);
         holder1.exciting.setImageResource(excitingImage);
         holder1.best.setImageResource(bestImage);
-        if (!mAnswerList.get(position).getAuthorAvatar().equals("null")){
+        Boolean flag1 = mAnswerList.get(position).getAuthorAvatar().equals("null") || mAnswerList.get(position).getAuthorAvatar().equals("");
+        if (!flag1){
             new Thread(new Runnable() {
                 @Override
                 public void run() {

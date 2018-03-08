@@ -27,6 +27,7 @@ import com.example.cynthia.bihu.Fragment.MainFragment;
 import com.example.cynthia.bihu.Fragment.SettingFragment;
 import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.MyApplication;
+import com.example.cynthia.bihu.Tools.StatusBarUrl;
 
 import java.util.List;
 
@@ -39,6 +40,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUrl.setColor(this);
         setContentView(R.layout.activity_main);
         initView();
     }

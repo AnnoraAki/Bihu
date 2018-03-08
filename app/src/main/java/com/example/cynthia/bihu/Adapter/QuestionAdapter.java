@@ -178,7 +178,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             holder1.naive.setImageResource(naiveImage);
             holder1.exciting.setImageResource(excitingImage);
             holder1.favorite.setImageResource(favoriteImage);
-            if (!mQuestionList.get(position).getAuthorAvatar().equals("null")) {
+            Boolean flag1 = mQuestionList.get(position).getAuthorAvatar().equals("null") || mQuestionList.get(position).getAuthorAvatar().equals("");
+            if (!flag1) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -205,7 +206,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }else{
                 holder1.userAvatar.setImageResource(R.drawable.ic_head);
             }
-            if (!mQuestionList.get(position).getImages().equals("null")){
+            Boolean flag2 = mQuestionList.get(position).getImages().equals("null")||mQuestionList.get(position).getImages().equals("");
+            if (!flag2){
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

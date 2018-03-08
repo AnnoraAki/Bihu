@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.cynthia.bihu.R;
+import com.example.cynthia.bihu.Tools.StatusBarUrl;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,6 +25,7 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUrl.setTransparent(this);
         setContentView(R.layout.activity_welcome);
         initView();
         timer.schedule(task,1000,1000);

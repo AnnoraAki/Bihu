@@ -17,6 +17,7 @@ import com.example.cynthia.bihu.R;
 import com.example.cynthia.bihu.Tools.BitmapUrl;
 import com.example.cynthia.bihu.Tools.CircleImageView;
 import com.example.cynthia.bihu.Tools.MyApplication;
+import com.example.cynthia.bihu.Tools.StatusBarUrl;
 import com.example.cynthia.bihu.Tools.ToastUrl;
 
 import java.io.FileNotFoundException;
@@ -33,6 +34,7 @@ public class ChangeAvatarActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUrl.setColor(this);
         setContentView(R.layout.activity_change_avatar);
         back = findViewById(R.id.back_change_a);
         avatar = findViewById(R.id.show_image);

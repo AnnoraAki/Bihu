@@ -31,8 +31,8 @@ public class StatusBarUrl {
         }
     }
 
-    @SuppressLint("ResourceAsColor")
-    public static void setColor(Activity activity){
+
+    public static void setColor(Activity activity,int argb){
         Window window = activity.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         ViewGroup decorViewGroup = (ViewGroup) window.getDecorView();
@@ -41,7 +41,8 @@ public class StatusBarUrl {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, statusBarHeight);
         params.gravity = Gravity.TOP;
         statusBarView.setLayoutParams(params);
-        statusBarView.setBackgroundColor(android.R.color.holo_green_light);
+//      使用setbackgroundcolor会失效...
+        statusBarView.setBackgroundResource(argb);
         decorViewGroup.addView(statusBarView);
     }
 

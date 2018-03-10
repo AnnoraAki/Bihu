@@ -60,7 +60,7 @@ public class AnswerQuestionActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUrl.setColor(this);
+        StatusBarUrl.setColor(this,R.color.barColor);
         setContentView(R.layout.activity_answer_question);
 
         ImageView back = findViewById(R.id.back_more);
@@ -400,7 +400,14 @@ public class AnswerQuestionActivity extends BaseActivity {
         mQuestion.setDate(intent.getStringExtra("date"));
         mQuestion.setRecent(intent.getStringExtra("recent"));
         mQuestion.setAuthorAvatar(intent.getStringExtra("authorAvatar"));
-        mQuestion.setImages(intent.getStringExtra("image"));
+        String images = intent.getStringExtra("image");
+        if (images.contains(",")){
+            String[] images1 = images.split(",");
+            String image = images1[0];
+            mQuestion.setImages(image);
+        } else {
+            mQuestion.setImages(images);
+        }
         mQuestion.setIs_naive(intent.getBooleanExtra("naive",false));
         mQuestion.setIs_exciting(intent.getBooleanExtra("exciting",false));
         mQuestion.setIs_favorite(intent.getBooleanExtra("favorite",false));

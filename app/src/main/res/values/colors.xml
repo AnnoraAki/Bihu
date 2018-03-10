@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorSelected">#94CB00</color>
     <color name="colorWaitforSelected">#999999</color>
+    <color name="barColor">#B3336633</color>
 </resources>

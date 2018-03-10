@@ -55,7 +55,7 @@ public class AskQuestionActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUrl.setColor(this);
+        StatusBarUrl.setColor(this,R.color.barColor);
         setContentView(R.layout.activity_ask_question);
 
         ImageView backToPrevious = findViewById(R.id.back_ask);

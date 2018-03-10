@@ -34,7 +34,7 @@ public class ChangeAvatarActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUrl.setColor(this);
+        StatusBarUrl.setColor(this,R.color.barColor);
         setContentView(R.layout.activity_change_avatar);
         back = findViewById(R.id.back_change_a);
         avatar = findViewById(R.id.show_image);
@@ -54,7 +54,8 @@ public class ChangeAvatarActivity extends BaseActivity {
         chooseCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openCamera();
+//                openCamera();
+                ToastUrl.showResponse("暂时不支持拍照上传~");
             }
         });
 

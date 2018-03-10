@@ -79,6 +79,7 @@
 
         <ImageView
                 android:id="@+id/question_context_image"
+                android:layout_gravity="top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

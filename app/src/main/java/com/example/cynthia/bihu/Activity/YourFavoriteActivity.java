@@ -40,7 +40,7 @@ public class YourFavoriteActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUrl.setColor(this);
+        StatusBarUrl.setColor(this,R.color.barColor);
         setContentView(R.layout.activity_your_favorite);
 
         favoriteRv = findViewById(R.id.favorite_recycler);
@@ -115,7 +115,16 @@ public class YourFavoriteActivity extends BaseActivity {
                 question.setAuthorId(jsonObject2.getInt("authorId"));
                 question.setAuthorName(jsonObject2.getString("authorName"));
                 question.setAuthorAvatar(jsonObject2.getString("authorAvatar"));
-                question.setImages(jsonObject2.getString("images"));
+                String images = jsonObject2.getString("images");
+                Log.d("images=",images);
+                if (images.contains(",")){
+                    String[] images1 = images.split(",");
+                    String image = images1[0];
+                    Log.d("处理后image=",image);
+                    question.setImages(image);
+                } else {
+                    question.setImages(images);
+                }
                 question.setIs_exciting(jsonObject2.getBoolean("is_exciting"));
                 question.setIs_naive(jsonObject2.getBoolean("is_naive"));
                 question.setIs_favorite(true);

@@ -21,6 +21,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private int time = 3;
     private Handler handler;
     Timer timer = new Timer();
+    Boolean finish = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +34,11 @@ public class WelcomeActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                if (finish){
                 Intent intent = new Intent(WelcomeActivity.this,LogInActivity.class);
                 startActivity(intent);
                 finish();
+                }
             }
         }, 3000);
     }
@@ -45,6 +48,7 @@ public class WelcomeActivity extends AppCompatActivity {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                finish = false;
                 Intent intent = new Intent(WelcomeActivity.this,LogInActivity.class);
                 startActivity(intent);
                 finish();

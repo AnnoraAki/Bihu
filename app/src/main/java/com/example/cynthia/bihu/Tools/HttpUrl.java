@@ -23,60 +23,65 @@ import javax.security.auth.callback.Callback;
 
 public class HttpUrl {
     public static void sendHttpRequest(final String api, final String param, final Callback callback){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpURLConnection connection = null;
-                try{
-                    URL url = new URL(api);
-                    connection = (HttpURLConnection)url.openConnection();
-                    connection.setReadTimeout(5 * 1000);
-                    connection.setConnectTimeout(10 * 1000);
-                    if (param == null)
-                        connection.setRequestMethod("GET");
-                    else{
-                    connection.setRequestMethod("POST");
-                    connection.setDoInput(true);
-                    connection.setDoOutput(true);
-                    OutputStream os = connection.getOutputStream();
-                    os.write(param.getBytes("UTF-8"));
-                    os.flush();
-                    os.close();
-                    }
-                    InputStream inputStream = connection.getInputStream();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                    StringBuilder response = new StringBuilder();
-                    String line;
-                    while ((line = reader.readLine()) != null) {
+        if (!NetWorkUrl.isNetworkConnected(MyApplication.getContext())){
+            ToastUrl.showResponse("当前无网络连接");
+        }else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    HttpURLConnection connection = null;
+                    try{
+                        URL url = new URL(api);
+                        connection = (HttpURLConnection)url.openConnection();
+                        connection.setReadTimeout(5 * 1000);
+                        connection.setConnectTimeout(10 * 1000);
+                        if (param == null)
+                            connection.setRequestMethod("GET");
+                        else{
+                            connection.setRequestMethod("POST");
+                            connection.setDoInput(true);
+                            connection.setDoOutput(true);
+                            OutputStream os = connection.getOutputStream();
+                            os.write(param.getBytes("UTF-8"));
+                            os.flush();
+                            os.close();
+                        }
+                        InputStream inputStream = connection.getInputStream();
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+                        StringBuilder response = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) {
                             response.append(line);
                         }
-                    try {
-                        JSONObject object = new JSONObject(response.toString());
-                        int status = object.getInt("status");
-                        String info = object.getString("info");
-                        Log.d("response",""+response);
-                        if (status == 200 && callback != null){
-                            callback.onFinish(response.toString());
-                        }else {
-                            callback.onError(info);
+                        try {
+                            JSONObject object = new JSONObject(response.toString());
+                            int status = object.getInt("status");
+                            String info = object.getString("info");
+                            Log.d("response",""+response);
+                            if (status == 200 && callback != null){
+                                callback.onFinish(response.toString());
+                            }else {
+                                callback.onError(info);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
-                } catch (MalformedURLException e) {
-                    if (callback != null)
-                        callback.onError(e.toString());
-                } catch (IOException e) {
-                    if (callback != null)
-                        callback.onError(e.toString());
-                }finally {
-                    if (connection != null){
-                        connection.disconnect();
+                    } catch (MalformedURLException e) {
+                        if (callback != null)
+                            callback.onError(e.toString());
+                    } catch (IOException e) {
+                        if (callback != null)
+                            callback.onError(e.toString());
+                    }finally {
+                        if (connection != null){
+                            connection.disconnect();
+                        }
                     }
                 }
-            }
-        }).start();
+            }).start();
+        }
+
     }
 
     public interface Callback{

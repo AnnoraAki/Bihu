@@ -40,7 +40,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUrl.setColor(this);
+        StatusBarUrl.setColor(this,R.color.barColor);
         setContentView(R.layout.activity_main);
         initView();
     }
